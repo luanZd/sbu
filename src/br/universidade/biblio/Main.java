@@ -1,5 +1,6 @@
 package br.universidade.biblio;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /// @brief Define os diferentes estados possíveis da aplicação.
@@ -149,8 +150,10 @@ public class Main {
     }
 
     //=== Método main.
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
+        String caminho = "banco.json";
+        GerenciadorDeDados gd = new GerenciadorDeDados(caminho);
         Main app = new Main();
         app.executar();
 
