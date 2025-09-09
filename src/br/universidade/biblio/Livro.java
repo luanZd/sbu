@@ -1,36 +1,54 @@
-public class Livro{
-    //Atributos
-    static private String titulo;
-    static private String autor;
-    static private int ano;
-    private boolean disponivel;
+package br.universidade.biblio;
 
-    //Construtor
-    public Livro(String titulo, String autor, int ano){
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ano = ano;
-        this.disponivel = true;
-    }
+public class Livro {
+  // Atributos
+  private String titulo;
+  private String autor;
+  private int ano;
+  private boolean disponivel;
 
-    //Métodos
-    public void setDisponivel(boolean b){
-        disponivel = b;
-    }
+  // Validação de dados
+  private void validarDados(String titulo, String autor, int ano) {
+    if (titulo == null || titulo.trim().isEmpty())
+      throw new IllegalArgumentException("Título não pode ser nulo ou vazio");
+    if (autor == null || autor.trim().isEmpty())
+      throw new IllegalArgumentException("Autor não pode ser nulo ou vazio");
+    if (ano <= 0)
+      throw new IllegalArgumentException("Ano deve ser um valor positivo");
+  }
 
-    public String getTitulo(){
-        return titulo;
-    }
+  // Construtores
+  public Livro(String titulo, String autor, int ano, boolean disponivel) {
+    validarDados(titulo, autor, ano);
 
-    public String getAutor(){
-        return autor;
-    }
+    this.titulo = titulo;
+    this.autor = autor;
+    this.ano = ano;
+    this.disponivel = disponivel;
+  }
 
-    public int getAno(){
-        return ano;
-    }
+  public Livro(String titulo, String autor, int ano) {
+    this(titulo, autor, ano, true);
+  }
 
-    public boolean getDisponivel(){
-        return disponivel;
-    }
+  // Getters e Setters
+  public void setDisponivel(boolean disponivel) {
+    this.disponivel = disponivel;
+  }
+
+  public String getTitulo() {
+    return titulo;
+  }
+
+  public String getAutor() {
+    return autor;
+  }
+
+  public int getAno() {
+    return ano;
+  }
+
+  public boolean isDisponivel() {
+    return disponivel;
+  }
 }
