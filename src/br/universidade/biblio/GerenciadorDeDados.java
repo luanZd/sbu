@@ -129,6 +129,17 @@ public class GerenciadorDeDados {
         }
     }
 
+    public synchronized List<Emprestimo> consultarTodosEmprestimosBanco() {
+        try {
+            Database db = carregar();
+            if (db.EMPRESTIMO.isEmpty()) return null;
+            return db.EMPRESTIMO;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private boolean igualEmprestimo(Emprestimo a, Emprestimo b) {
         return a.getDataEmprestimo().equals(b.getDataEmprestimo())
                 && a.getDataDevolucao().equals(b.getDataDevolucao());
