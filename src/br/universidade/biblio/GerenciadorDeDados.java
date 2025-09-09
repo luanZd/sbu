@@ -59,6 +59,33 @@ public class GerenciadorDeDados {
         }
     }
 
+    public synchronized Livro consultarLivroPorTitulo(String titulo) {
+        try {
+            Database db = carregar();
+            if (db.LIVRO.isEmpty()) return null;
+            for(Livro existente : db.LIVRO) {
+                if(titulo.equalsIgnoreCase(existente.getTitulo())){
+                    return existente;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public synchronized List<Livro> consultarTodosLivrosBanco() {
+        try {
+            Database db = carregar();
+            if (db.LIVRO.isEmpty()) return null;
+            return db.LIVRO;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     private boolean igualLivro(Livro a, Livro b) {
         return a.getTitulo().equalsIgnoreCase(b.getTitulo())
                 && a.getAutor().equalsIgnoreCase(b.getAutor())
