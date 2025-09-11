@@ -55,4 +55,17 @@ public class Emprestimo{
             System.out.println("Devolução pendente");
         }
     }
+    public Date getEmprestimo(){
+        return data_emprestimo;
+    }
+    public Date getDevolucao(){
+        return data_devolucao;
+    }
+    public Livro getLivro(){
+        return livro_emprestado;
+    }
+    public Usuario getUsuario(){
+        return usuario_emprestado;
+    }
 };
+
