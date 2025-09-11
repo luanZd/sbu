@@ -48,6 +48,7 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Retorna o último livro cadastrado
     public synchronized Livro consultarLivroBanco() {
         try {
             Database db = carregar();
@@ -59,6 +60,7 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Verifica se o livro com o título passado para este metodo existe. Se existir retorna o livro, caso contrário lança a excessão
     public synchronized Livro consultarLivroPorTitulo(String titulo) {
         try {
             Database db = carregar();
@@ -75,6 +77,7 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Retorna a lista de todos os livros salvos no json
     public synchronized List<Livro> consultarTodosLivrosBanco() {
         try {
             Database db = carregar();
@@ -86,6 +89,8 @@ public class GerenciadorDeDados {
         }
     }
 
+    /* Metodo que compara dois objetos do tipo Livro, usado no metodo de registro
+    para identificar se é um livro novo ou se já existe algum salvo para acrescentar mais um do mesmo no json */
     private boolean igualLivro(Livro a, Livro b) {
         return a.getTitulo().equalsIgnoreCase(b.getTitulo())
                 && a.getAutor().equalsIgnoreCase(b.getAutor())
@@ -97,8 +102,7 @@ public class GerenciadorDeDados {
             Database db = carregar();
             for (Usuario existente : db.USUARIO) {
                 if (igualUsuario(existente, usuario)) {
-                    salvar(db);
-                    return true;
+                    return false;
                 }
             }
             db.USUARIO.add(usuario);
@@ -110,6 +114,7 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Retorna o último usuário cadastrado
     public synchronized Usuario consultarUsuarioBanco() {
         try {
             Database db = carregar();
@@ -121,19 +126,50 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Verifica se o usuário com a matrícula passada para este metodo existe. Se existir retorna o usuário, caso contrário lança a excessão
+    public synchronized Usuario consultarUsuarioPorMatricula(String matricula) {
+        try {
+            Database db = carregar();
+            if (db.USUARIO.isEmpty()) return null;
+            for(Usuario existente : db.USUARIO) {
+                if(matricula.equalsIgnoreCase(existente.getMatricula())){
+                    return existente;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Retorna a lista de todos os usuários salvos no json
+    public synchronized List<Usuario> consultarTodosUsuariosBanco() {
+        try {
+            Database db = carregar();
+            if (db.USUARIO.isEmpty()) return null;
+            return db.USUARIO;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /* Metodo que compara dois objetos do tipo Usuario, usado no metodo de registro
+    para identificar se é um usuário novo ou se já está salvo no json */
     private boolean igualUsuario(Usuario a, Usuario b) {
         return a.getNome().equalsIgnoreCase(b.getNome())
                 && a.getMatricula().equalsIgnoreCase(b.getMatricula())
                 && a.getCurso().equalsIgnoreCase(b.getCurso());
     }
 
+
     public synchronized boolean registrarEmprestimoBanco(Emprestimo emprestimo) {
         try {
             Database db = carregar();
             for (Emprestimo existente : db.EMPRESTIMO) {
                 if (igualEmprestimo(existente, emprestimo)) {
-                    salvar(db);
-                    return true;
+                    return false;
                 }
             }
             db.EMPRESTIMO.add(emprestimo);
@@ -145,6 +181,7 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Retorna o último empréstimo salvo no json
     public synchronized Emprestimo consultarEmprestimoBanco() {
         try {
             Database db = carregar();
@@ -156,6 +193,24 @@ public class GerenciadorDeDados {
         }
     }
 
+    //Verifica se o emprestimo com o id passado para este metodo existe. Se existir retorna o empréstimo, caso contrário lança a excessão
+    public synchronized Emprestimo consultarEmprestimoPorID(int id) {
+        try {
+            Database db = carregar();
+            if (db.EMPRESTIMO.isEmpty()) return null;
+            for(Emprestimo existente : db.EMPRESTIMO) {
+                if(id == existente.getId()){
+                    return existente;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Retorna a lista de todos os empréstimos salvos no json
     public synchronized List<Emprestimo> consultarTodosEmprestimosBanco() {
         try {
             Database db = carregar();
@@ -167,6 +222,8 @@ public class GerenciadorDeDados {
         }
     }
 
+    /* Metodo que compara dois objetos do tipo Emprestimo, usado no metodo de registro
+    para identificar se é um empréstimo novo ou se já está salvo no json */
     private boolean igualEmprestimo(Emprestimo a, Emprestimo b) {
         return a.getDataEmprestimo().equals(b.getDataEmprestimo())
                 && a.getDataDevolucao().equals(b.getDataDevolucao());
