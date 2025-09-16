@@ -194,21 +194,21 @@ public class GerenciadorDeDados {
     }
 
     //Verifica se o emprestimo com o id passado para este metodo existe. Se existir retorna o empréstimo, caso contrário lança a excessão
-    public synchronized Emprestimo consultarEmprestimoPorID(int id) {
-        try {
-            Database db = carregar();
-            if (db.EMPRESTIMO.isEmpty()) return null;
-            for(Emprestimo existente : db.EMPRESTIMO) {
-                if(id == existente.getId()){
-                    return existente;
-                }
-            }
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    // public synchronized Emprestimo consultarEmprestimoPorID(int id) {
+    //     try {
+    //         Database db = carregar();
+    //         if (db.EMPRESTIMO.isEmpty()) return null;
+    //         for(Emprestimo existente : db.EMPRESTIMO) {
+    //             if(id == existente.getId()){
+    //                 return existente;
+    //             }
+    //         }
+    //         return null;
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //         return null;
+    //     }
+    // }
 
     //Retorna a lista de todos os empréstimos salvos no json
     public synchronized List<Emprestimo> consultarTodosEmprestimosBanco() {
