@@ -9,15 +9,11 @@ import java.util.Date;
 import java.io.IOException;
 
 public class Biblioteca {
-    private Usuario usuario;
-    private Livro livro;
     private Utils utils;
 
     /// Ctor Padrão
     public Biblioteca() {
         //FIXME: Construtores padrão para o Usuário e Livro não foram criados
-        this.usuario = new Usuario();
-        this.livro = new Livro();
         this.utils = new Utils();
     }
 
@@ -214,7 +210,7 @@ public class Biblioteca {
      * Adiciona um Usuário no Banco de Dados
      * @return true se o Usuário foi registrado, false caso contrário.
      */
-    public boolean adicionarUsuario() {
+    public boolean adicionarUsuario(Usuario usuario) {
         try {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
             if (gd.consultarUsuarioPorMatricula(usuario.getMatricula()) != null){
