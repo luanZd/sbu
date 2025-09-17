@@ -1,8 +1,8 @@
-package br.com.universidade.biblio;
+package br.universidade.biblio;
 
-import br.com.universidade.biblio.Usuario;
-import br.com.universidade.biblio.Livro;
-import br.com.universidade.biblio.Emprestimo;
+import br.universidade.biblio.Usuario;
+import br.universidade.biblio.Livro;
+import br.universidade.biblio.Emprestimo;
 
 import java.util.ArrayList;
 import java.util.Date;
