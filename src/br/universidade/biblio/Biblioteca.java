@@ -31,7 +31,7 @@ public class Biblioteca {
     }
 
     private boolean validarUsuario(Usuario u) {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         if(gd.consultarUsuarioPorMatricula(u.getMatricula()) == null) {
             System.out.println("Usuário inexistente.");
             return false;
@@ -48,7 +48,7 @@ public class Biblioteca {
     }
 
     private boolean livroEstaRegistrado(Livro l) {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         List<Livro> livros = gd.consultarTodosLivrosBanco();
         boolean livroRegistrado = false;
         
@@ -69,7 +69,7 @@ public class Biblioteca {
     }
 
     private boolean livroEstaDisponivel(Livro l) {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         List<Emprestimo> emprestimos = gd.consultarTodosEmprestimosBanco();
         int qtdLivrosEmprestados = 0;
 
@@ -108,7 +108,7 @@ public class Biblioteca {
      * @return Instância do empréstimo ativo
     */
     public Emprestimo registrarEmprestimo(Usuario u, Livro l, Date dataDeDevolucao) {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         Emprestimo emprestimo = new Emprestimo(u, l, new Date(), dataDeDevolucao);
         
         if(!validarEmprestimo(emprestimo)) {
@@ -131,7 +131,7 @@ public class Biblioteca {
      * @return a Instância do Empréstimo atualizada com a devolução ou null caso a instância de empréstimo seja inválida
      * */
     public Emprestimo registrarDevolucao(Emprestimo e, Date dataDevolvido) {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         if (!validarEmprestimo(e)) {
             return null;
         } else {
@@ -152,7 +152,7 @@ public class Biblioteca {
      * @return true caso o Livro tenha sido registrado, false caso contrário.
     */
     public boolean adicionarLivro(Livro livro) {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         if (!livroEstaRegistrado(livro)) {
             System.out.println("ERRO: Livro já adicionado");
             return false;
@@ -169,7 +169,7 @@ public class Biblioteca {
     public ArrayList<Livro> listarLivros() {
         // o método consultarTodosLivrosBanco()
         // já possui tratamento de erros 
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         // caso falhe retorna null
         return gd.consultarTodosLivrosBanco();
     }
@@ -179,7 +179,7 @@ public class Biblioteca {
      * @return true se o Usuário foi registrado, false caso contrário.
      */
     public boolean adicionarUsuario() {
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         if (gd.consultarUsuarioPorMatricula(usuario.getMatricula()) != null){
             System.out.println("ERRO: Usuário já adicionado");
             return false;
@@ -198,7 +198,7 @@ public class Biblioteca {
      * @return A lista de Usuários do Banco de Dados
      */
     public ArrayList<Usuario> listarUsuarios() { // Seguindo o mesmo padrao de listarLivros
-        GerenciadorDeDados gd = new GerenciadorDeDados();
+        GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
         return gd.consultarTodosUsuariosBanco();
     }
 }
