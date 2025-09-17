@@ -1,7 +1,10 @@
+package br.universidade.biblio;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
 	private String nome;
