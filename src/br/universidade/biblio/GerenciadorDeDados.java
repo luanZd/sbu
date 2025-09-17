@@ -91,7 +91,7 @@ public class GerenciadorDeDados {
 
     /* Metodo que compara dois objetos do tipo Livro, usado no metodo de registro
     para identificar se é um livro novo ou se já existe algum salvo para acrescentar mais um do mesmo no json */
-    private boolean igualLivro(Livro a, Livro b) {
+    public boolean igualLivro(Livro a, Livro b) {
         return a.getTitulo().equalsIgnoreCase(b.getTitulo())
                 && a.getAutor().equalsIgnoreCase(b.getAutor())
                 && a.getAno() == b.getAno();
@@ -157,7 +157,7 @@ public class GerenciadorDeDados {
 
     /* Metodo que compara dois objetos do tipo Usuario, usado no metodo de registro
     para identificar se é um usuário novo ou se já está salvo no json */
-    private boolean igualUsuario(Usuario a, Usuario b) {
+    public boolean igualUsuario(Usuario a, Usuario b) {
         return a.getNome().equalsIgnoreCase(b.getNome())
                 && a.getMatricula().equalsIgnoreCase(b.getMatricula())
                 && a.getCurso().equalsIgnoreCase(b.getCurso());
@@ -194,21 +194,21 @@ public class GerenciadorDeDados {
     }
 
     //Verifica se o emprestimo com o id passado para este metodo existe. Se existir retorna o empréstimo, caso contrário lança a excessão
-    public synchronized Emprestimo consultarEmprestimoPorID(int id) {
-        try {
-            Database db = carregar();
-            if (db.EMPRESTIMO.isEmpty()) return null;
-            for(Emprestimo existente : db.EMPRESTIMO) {
-                if(id == existente.getId()){
-                    return existente;
-                }
-            }
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    // public synchronized Emprestimo consultarEmprestimoPorID(int id) {
+    //     try {
+    //         Database db = carregar();
+    //         if (db.EMPRESTIMO.isEmpty()) return null;
+    //         for(Emprestimo existente : db.EMPRESTIMO) {
+    //             if(id == existente.getId()){
+    //                 return existente;
+    //             }
+    //         }
+    //         return null;
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //         return null;
+    //     }
+    // }
 
     //Retorna a lista de todos os empréstimos salvos no json
     public synchronized List<Emprestimo> consultarTodosEmprestimosBanco() {
@@ -224,7 +224,7 @@ public class GerenciadorDeDados {
 
     /* Metodo que compara dois objetos do tipo Emprestimo, usado no metodo de registro
     para identificar se é um empréstimo novo ou se já está salvo no json */
-    private boolean igualEmprestimo(Emprestimo a, Emprestimo b) {
+    public boolean igualEmprestimo(Emprestimo a, Emprestimo b) {
         return a.getDataEmprestimo().equals(b.getDataEmprestimo())
                 && a.getDataDevolucao().equals(b.getDataDevolucao());
     }
