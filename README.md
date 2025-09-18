@@ -1,6 +1,20 @@
 # sbu
 Sistema de Biblioteca Universitário
 
+## Compilar e executar
+
+O comando abaixo compila todos os arquivos `.java` da pasta **src/** e gera os `.class` dentro da pasta **bin/**, já configurando o classpath para incluir as bibliotecas externas:
+
+```sh
+javac -cp "./lib/*" -d ./bin -sourcepath src src/br/universidade/biblio/Main.java
+```
+
+Após a compilação, o programa pode ser iniciado com:
+
+```sh
+java  -cp "./bin:./lib/*" br.universidade.biblio.Main
+```
+
 ## Colaboradores
 - Diego Luan ([luanZd](github.com/luanZd)) - **Grupo 01: Main**;
 - Yasmin Giordano ([minkyzecapagods](github.com/minkyzecapagods)) - **Grupo 02: Livro**;

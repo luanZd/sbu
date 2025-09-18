@@ -24,7 +24,7 @@ public class Relatorio {
     List<Emprestimo> atrasados = new ArrayList<>();
 
     for (Emprestimo e : db.consultarTodosEmprestimosBanco()) {
-      Date dataDevolucao = e.getDevolucao();
+      Date dataDevolucao = e.getDataDevolucao();
 
       if (dataDevolucao != null && dataDevolucao.before(hoje)) {
         atrasados.add(e);
@@ -38,11 +38,11 @@ public class Relatorio {
     Date hoje = new Date();
 
     for (Emprestimo e : db.consultarTodosEmprestimosBanco()) {
-      Date dataDevolucao = e.getDevolucao();
+      Date dataDevolucao = e.getDataDevolucao();
 
       if (dataDevolucao != null && dataDevolucao.before(hoje)) {
         Usuario u = e.getUsuario();
-        if (!userList.contains(u)) { // evitar duplicados
+        if (!userList.contains(u)) {
           userList.add(u);
         }
       }
