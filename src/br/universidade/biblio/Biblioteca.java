@@ -13,7 +13,18 @@ public class Biblioteca {
 
     /// Ctor Padrão
     public Biblioteca() {
+        //FIXME: Construtores padrão para o Usuário e Livro não foram criados
         this.utils = new Utils();
+    }
+
+    private boolean livrosIguais(Livro livro1, Livro livro2) {
+        if(livro1.getTitulo().equalsIgnoreCase(livro2.getTitulo())
+        && livro1.getAutor().equalsIgnoreCase(livro2.getAutor())
+        && livro1.getAno() == livro2.getAno()) {
+            // Livro foi encontrado no GD
+            return true;
+        }
+        return false;
     }
 
     private boolean validarUsuario(Usuario u) {
@@ -45,7 +56,7 @@ public class Biblioteca {
             boolean livroRegistrado = false;
             
             for(Livro livro: livros) {
-                if(gd.livrosIguais(livro, l)) {
+                if(livrosIguais(livro, l)) {
                     // Livro foi encontrado no GD
                     livroRegistrado = true;
                     break;
@@ -71,11 +82,11 @@ public class Biblioteca {
             int qtdLivrosEmprestados = 0;
     
             for(Emprestimo emp: emprestimos) {
-                if(gd.livrosIguais(emp.getLivro(), l) && emp.getDevolucao() == null) {
+                if(livrosIguais(emp.getLivro(), l)) {
                     qtdLivrosEmprestados++;
                 }
             }
-            //TODO: Método (ainda) não existe
+            //FIXME: Método (ainda) não existe
             if(qtdLivrosEmprestados >= l.getQuantidade()) {
                 System.out.println("Livro indisponível no momento.");
                 return false;
@@ -96,7 +107,7 @@ public class Biblioteca {
 
     private boolean validarEmprestimo(Emprestimo emprestimo) {
         if(!validarUsuario(emprestimo.getUsuario())) return false;
-        if(!validarDataDeDevolucao(emprestimo.getDevolucao())) return false;
+        if(!validarDataDeDevolucao(emprestimo.getDataDevolucao())) return false;
         if(!validarLivro(emprestimo.getLivro())) return false;
         return true;
     }
@@ -112,7 +123,7 @@ public class Biblioteca {
         try {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
             // FIXME: Construtor inválido
-            Emprestimo emprestimo = new Emprestimo(u, l, new Date(), null);
+            Emprestimo emprestimo = new Emprestimo(u, l, new Date(), dataDeDevolucao);
             
             if(!validarEmprestimo(emprestimo)) {
                 return null;
@@ -143,18 +154,18 @@ public class Biblioteca {
             if (!validarEmprestimo(e)) {
                 return null;
             } else {
-                List<Emprestimo> listaEmprestimos = gd.consultarTodosEmprestimosBanco();
-                for (Emprestimo emprestimo : listaEmprestimos) {
-                  if (emprestimosIguais(e,emprestimo)) {
-                    e = emprestimo;
-                    break;
-                  }
-                }
-                e.setDevolucao(dataDevolvido);
+                // TODO: Precisa adicionar um desses dois membros + setter, para poder determinar se o empréstimo está ativo ou não
+                // (e a devolução fazer algo)
+                e.setDevolvido(true);
+                // e.setDataDevolvido(new Date());
+    
+                // Ou também remover o empréstimo do banco de dados, ver qual é melhor (teria que mudar o tipo de retorno)
+                //gd.removerEmprestimoBanco(e)
                 return e;
             }
         } catch(IOException ie) {
             System.out.println("Não foi possível instanciar o gerenciador de dados");
+            return null;
         }
     }
     
