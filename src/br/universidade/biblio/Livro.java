@@ -6,6 +6,7 @@ public class Livro {
   private String autor;
   private int ano;
   private boolean disponivel;
+  private int quantidade;
 
   // Validação de dados
   private void validarDados(String titulo, String autor, int ano) {
@@ -29,6 +30,39 @@ public class Livro {
 
   public Livro(String titulo, String autor, int ano) {
     this(titulo, autor, ano, true);
+  }
+  
+  //Parte do código que me forçaram a adicionar mas eu discordo intrinsecamente
+  public Livro() {
+    this("Título Padrão", "Autor Padrão", 2000, true);
+  }
+
+  public setTitulo(String titulo) {
+    if (titulo == null || titulo.trim().isEmpty())
+      throw new IllegalArgumentException("Título não pode ser nulo ou vazio");
+    this.titulo = titulo;
+  }
+
+  public setAutor(String autor) {
+    if (autor == null || autor.trim().isEmpty())
+      throw new IllegalArgumentException("Autor não pode ser nulo ou vazio");
+    this.autor = autor;
+  }
+
+  public setAno(int ano) {
+    if (ano <= 0)
+      throw new IllegalArgumentException("Ano deve ser um valor positivo");
+    this.ano = ano;
+  }
+
+    public int getQuantidade() {
+    return quantidade;
+  }
+
+  public void setQuantidade(int quantidade) {
+    if (quantidade < 0)
+      throw new IllegalArgumentException("Quantidade não pode ser negativa");
+    this.quantidade = quantidade;
   }
 
   // Getters e Setters
