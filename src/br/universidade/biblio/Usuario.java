@@ -60,15 +60,6 @@ public class Usuario {
     }
 
     public List<Livro> getEmprestimos() {
-        return listaDeEmprestimos;
-    }
-
-    public List<Livro> getEmprestimos() {
         return Collections.unmodifiableList(listaDeEmprestimos);
     }
-
-    public void adicionarEmprestimo(Livro livro) { 
-        listaDeEmprestimos.add(livro); 
-    }
 }
-
