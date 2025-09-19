@@ -209,6 +209,23 @@ public class GerenciadorDeDados {
     //     }
     // }
 
+    public synchronized Emprestimo registrarDevolucaoBanco(Emprestimo e) {
+        try {
+            Database db = carregar();
+            for (Emprestimo emprestimo : db.EMPRESTIMO) {
+                if (igualEmprestimo(emprestimo, e)) {
+                    emprestimo.setDevolvido(true);
+                    salvar(db);
+                    return emprestimo;
+                }
+            }
+            return null;
+        } catch (IOException ie) {
+            ie.printStackTrace();
+            return null;
+        }
+    }
+
     //Retorna a lista de todos os empréstimos salvos no json
     public synchronized List<Emprestimo> consultarTodosEmprestimosBanco() {
         try {

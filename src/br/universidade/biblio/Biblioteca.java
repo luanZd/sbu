@@ -9,7 +9,6 @@ public class Biblioteca {
 
     /// Ctor Padrão
     public Biblioteca() {
-        //FIXME: Construtores padrão para o Usuário e Livro não foram criados
         this.utils = new Utils();
     }
 
@@ -85,7 +84,6 @@ public class Biblioteca {
                     qtdLivrosEmprestados++;
                 }
             }
-            //FIXME: Método (ainda) não existe
             if(qtdLivrosEmprestados >= l.getQuantidade()) {
                 System.out.println("Livro indisponível no momento.");
                 return false;
@@ -150,18 +148,11 @@ public class Biblioteca {
     public Emprestimo registrarDevolucao(Emprestimo e, Date dataDevolvido) {
         try {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
+            
             if (!validarEmprestimo(e)) {
                 return null;
             } else {
-                // TODO: Precisa adicionar um desses dois membros + setter, para poder determinar se o empréstimo está ativo ou não
-                // (e a devolução fazer algo)
-                e.setDevolvido(true);
-                // e.setDataDevolvido(new Date());
-                //atualizar a quantidade de livros disponíveis no banco de dados
-                 e.getLivro().setQuantidade(e.getLivro().getQuantidade() + 1);
-                // Ou também remover o empréstimo do banco de dados, ver qual é melhor (teria que mudar o tipo de retorno)
-                //gd.removerEmprestimoBanco(e)
-                return e;
+                return gd.registrarDevolucaoBanco(e);
             }
         } catch(IOException ie) {
             System.out.println("Não foi possível instanciar o gerenciador de dados");
