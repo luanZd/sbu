@@ -7,30 +7,33 @@ public class Livro {
   private boolean disponivel;
   private int quantidade;
 
-  private void validarDados(String titulo, String autor, int ano) {
+  private void validarDados(String titulo, String autor, int ano, int quantidade) {
     if (titulo == null || titulo.trim().isEmpty())
       throw new IllegalArgumentException("Título não pode ser nulo ou vazio");
     if (autor == null || autor.trim().isEmpty())
       throw new IllegalArgumentException("Autor não pode ser nulo ou vazio");
     if (ano <= 0)
       throw new IllegalArgumentException("Ano deve ser um valor positivo");
+    if (quantidade < 0)
+      throw new IllegalArgumentException("Quantidade deve ser um valor não negativo");
   }
 
-  public Livro(String titulo, String autor, int ano, boolean disponivel) {
-    validarDados(titulo, autor, ano);
+  public Livro(String titulo, String autor, int ano, boolean disponivel, int quantidade) {
+    validarDados(titulo, autor, ano, quantidade);
 
     this.titulo = titulo;
     this.autor = autor;
     this.ano = ano;
     this.disponivel = disponivel;
+    this.quantidade = quantidade;
   }
 
   public Livro(String titulo, String autor, int ano) {
-    this(titulo, autor, ano, true);
+    this(titulo, autor, ano, true, 0);
   }
   
   public Livro() {
-    this("Título Padrão", "Autor Padrão", 2000, true);
+    this("Título Padrão", "Autor Padrão", 2000, true, 0);
   }
 
   public void setTitulo(String titulo) {
