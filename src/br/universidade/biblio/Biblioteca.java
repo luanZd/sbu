@@ -54,7 +54,8 @@ public class Biblioteca {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
             List<Livro> livros = gd.consultarTodosLivrosBanco();
             boolean livroRegistrado = false;
-            
+	    
+	    if (livros != null) {
             for(Livro livro: livros) {
                 if(livrosIguais(livro, l)) {
                     // Livro foi encontrado no GD
@@ -62,9 +63,11 @@ public class Biblioteca {
                     break;
                 }
             }
-    
-            if(!livroRegistrado) {
-                System.out.println("Livro não registrado na biblioteca.");
+	    }
+   
+	 
+	                if(!livroRegistrado) {
+               // System.out.println("Livro não registrado na biblioteca.");
                 return false;
             }
     
@@ -177,7 +180,7 @@ public class Biblioteca {
     public boolean adicionarLivro(Livro livro) {
         try {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
-            if (!livroEstaRegistrado(livro)) {
+            if (livroEstaRegistrado(livro)) {
                 System.out.println("ERRO: Livro já adicionado");
                 return false;
             } else {
