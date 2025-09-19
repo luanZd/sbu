@@ -13,6 +13,10 @@ public class Usuario {
     private String curso;
     private List<Livro> listaDeEmprestimos; 
 
+    public Usuario() {
+        this.listaDeEmprestimos = new ArrayList<>();
+    }
+
     public Usuario(String nome, String curso) {
         this.nome = nome;
         this.curso = curso;
