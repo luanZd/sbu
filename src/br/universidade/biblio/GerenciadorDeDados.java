@@ -65,8 +65,9 @@ public class GerenciadorDeDados {
         try {
             Database db = carregar();
             if (db.LIVRO.isEmpty()) return null;
-            for(Livro existente : db.LIVRO) {
-                if(titulo.equalsIgnoreCase(existente.getTitulo())){
+            //verifica se está disponível
+            for (Livro existente : db.LIVRO) {
+                if (titulo.equalsIgnoreCase(existente.getTitulo()) && existente.isDisponivel()) {
                     return existente;
                 }
             }
@@ -81,11 +82,10 @@ public class GerenciadorDeDados {
     public synchronized List<Livro> consultarTodosLivrosBanco() {
         try {
             Database db = carregar();
-            if (db.LIVRO.isEmpty()) return null;
-            return db.LIVRO;
+            return db.LIVRO != null ? db.LIVRO : new java.util.ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new java.util.ArrayList<>();
         }
     }
 
@@ -147,11 +147,10 @@ public class GerenciadorDeDados {
     public synchronized List<Usuario> consultarTodosUsuariosBanco() {
         try {
             Database db = carregar();
-            if (db.USUARIO.isEmpty()) return null;
-            return db.USUARIO;
+            return db.USUARIO != null ? db.USUARIO : new java.util.ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new java.util.ArrayList<>();
         }
     }
 
@@ -214,11 +213,10 @@ public class GerenciadorDeDados {
     public synchronized List<Emprestimo> consultarTodosEmprestimosBanco() {
         try {
             Database db = carregar();
-            if (db.EMPRESTIMO.isEmpty()) return null;
-            return db.EMPRESTIMO;
+            return db.EMPRESTIMO != null ? db.EMPRESTIMO : new java.util.ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return new java.util.ArrayList<>();
         }
     }
 
