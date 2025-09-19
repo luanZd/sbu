@@ -1,11 +1,8 @@
 package br.universidade.biblio;
 
-import br.universidade.biblio.Emprestimo;
-import br.universidade.biblio.GerenciadorDeDados;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 public class Relatorio {
 
@@ -33,6 +30,7 @@ public class Relatorio {
     return atrasados;
   }
 
+
   public List<Usuario> consultarUsuariosComEmprestimosAtrasados() {
     List<Usuario> userList = new ArrayList<>();
     Date hoje = new Date();
@@ -48,5 +46,37 @@ public class Relatorio {
       }
     }
     return userList;
+  }
+
+
+
+  void gerarRelatorioEmprestimos() {
+    List<Emprestimo> emprestimos = consultarTodosLivrosEmprestados();
+    System.out.println("Relatório de Empréstimos:");
+    if(emprestimos.isEmpty()) {
+      System.out.println("Nenhum empréstimo registrado.");
+      return;
+    }
+    for (Emprestimo e : emprestimos) {
+      System.out.println("Usuário: " + e.getUsuario().getNome() +
+          " | Livro: " + e.getLivro().getTitulo() +
+          " | Data de Empréstimo: " + e.getDataEmprestimo() +
+          " | Data de Devolução: " + e.getDataDevolucao());
+    }
+  }
+
+  void gerarRelatorioAtrasados() {
+    List<Emprestimo> atrasados = consultarEmprestimosAtrasados();
+    System.out.println("Relatório de Empréstimos Atrasados:");
+    if(atrasados.isEmpty()) {
+      System.out.println("Nenhum empréstimo atrasado.");
+      return;
+    }
+    for (Emprestimo e : atrasados) {
+      System.out.println("Usuário: " + e.getUsuario().getNome() +
+          " | Livro: " + e.getLivro().getTitulo() +
+          " | Data de Empréstimo: " + e.getDataEmprestimo() +
+          " | Data de Devolução: " + e.getDataDevolucao());
+    }
   }
 }
