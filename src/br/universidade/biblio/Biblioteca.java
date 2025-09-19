@@ -1,12 +1,8 @@
 package br.universidade.biblio;
 
-import br.universidade.biblio.Usuario;
-import br.universidade.biblio.Livro;
-import br.universidade.biblio.Emprestimo;
-
-import java.util.List;
-import java.util.Date;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 public class Biblioteca {
     private Utils utils;
@@ -161,7 +157,8 @@ public class Biblioteca {
                 // (e a devolução fazer algo)
                 e.setDevolvido(true);
                 // e.setDataDevolvido(new Date());
-    
+                //atualizar a quantidade de livros disponíveis no banco de dados
+                 e.getLivro().setQuantidade(e.getLivro().getQuantidade() + 1);
                 // Ou também remover o empréstimo do banco de dados, ver qual é melhor (teria que mudar o tipo de retorno)
                 //gd.removerEmprestimoBanco(e)
                 return e;
@@ -202,11 +199,11 @@ public class Biblioteca {
         // já possui tratamento de erros 
         try {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
-            // caso falhe retorna null
-            return gd.consultarTodosLivrosBanco();
+            List<Livro> livros = gd.consultarTodosLivrosBanco();
+            return livros != null ? livros : new java.util.ArrayList<>();
         } catch(IOException ie) {
             System.out.println("Não foi possível instanciar o gerenciador de dados");
-            return null;
+            return new java.util.ArrayList<>();
         }
     }
 
@@ -241,10 +238,11 @@ public class Biblioteca {
     public List<Usuario> listarUsuarios() { // Seguindo o mesmo padrao de listarLivros
         try {
             GerenciadorDeDados gd = new GerenciadorDeDados("banco.json");
-            return gd.consultarTodosUsuariosBanco();
+            List<Usuario> usuarios = gd.consultarTodosUsuariosBanco();
+            return usuarios != null ? usuarios : new java.util.ArrayList<>();
         } catch(IOException ie) {
             System.out.println("Não foi possível instanciar o gerenciador de dados");
-            return null;
+            return new java.util.ArrayList<>();
         }
     }
 }
