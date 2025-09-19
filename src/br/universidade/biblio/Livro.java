@@ -80,4 +80,10 @@ public class Livro {
   public boolean isDisponivel() {
     return disponivel;
   }
+
+  @Override
+  public String toString() {
+      return titulo + " - " + autor;
+  }
+
 }

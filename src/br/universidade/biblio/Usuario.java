@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Usuario {
@@ -56,6 +57,14 @@ public class Usuario {
 
     public List<Livro> getEmprestimos() {
         return listaDeEmprestimos;
+    }
+
+    public List<Livro> getEmprestimos() {
+        return Collections.unmodifiableList(listaDeEmprestimos);
+    }
+
+    public void adicionarEmprestimo(Livro livro) { 
+        listaDeEmprestimos.add(livro); 
     }
 }
 
