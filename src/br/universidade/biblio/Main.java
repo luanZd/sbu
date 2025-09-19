@@ -1,7 +1,7 @@
 package br.universidade.biblio;
 
-import br.universidade.biblio.Biblioteca;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /// @brief Define os diferentes estados possíveis da aplicação.
@@ -18,6 +18,7 @@ enum Estados {
     LISTA_LIVROS,
     RELATORIO,
     ENCERRADO;
+
 }
 
 /// @brief Motor da aplicação.
@@ -29,8 +30,23 @@ public class Main {
     private Scanner scanner; // !< Mecanismo de leitura de estrada.
     private int opcaoDoUsuario; // !< Opção escolhida no menu de opções.
     private String entrada; // !< Linha de entrada do usuário contendo informações da funcionalidade
-                            // escolhida.
+    // escolhida.
     private String mensagemDeErro;
+    private List<Livro> livrosTemp = new ArrayList<>();
+    private List<Usuario> usuariosTemp = new ArrayList<>();
+
+    private boolean ehNumeroInteiro(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+//!< Método deve ir para o UTILS, revisar implementação
 
     // === Construtor.
     public Main() {
@@ -58,6 +74,15 @@ public class Main {
         }
 
         if (estadoAtual == Estados.CADASTRO_USUARIO) {
+            entrada = scanner.nextLine();
+        }
+        if (estadoAtual == Estados.CADASTRO_LIVRO) {
+            entrada = scanner.nextLine();
+        }
+        if (estadoAtual == Estados.LISTA_USUARIOS) {
+            entrada = scanner.nextLine();
+        }
+        if (estadoAtual == Estados.LISTA_LIVROS) {
             entrada = scanner.nextLine();
         }
 
@@ -112,7 +137,7 @@ public class Main {
             }
 
             return; // <-- Evita que a validação do estado das transições acima
-                    // seja executada antes da renderização da interface.
+            // seja executada antes da renderização da interface.
         }
 
         if (estadoAtual == Estados.ERRO) {
@@ -138,29 +163,70 @@ public class Main {
 
             estadoAtual = Estados.SUCESSO;
         }
-
         if (estadoAtual == Estados.CADASTRO_LIVRO) {
-            /// @todo: Valida entrada e alterna o estado.
+            String[] partes = entrada.split(",");
+
+            if (partes.length != 3) {
+                mensagemDeErro = "Entrada inválida! Formato esperado: titulo, autor, ano.";
+                estadoAtual = Estados.ERRO;
+                return;
+            }
+
+            String titulo = partes[0].trim();
+            String autor = partes[1].trim();
+            String anoStr = partes[2].trim();
+
+            if (!ehNumeroInteiro(anoStr)) {
+                mensagemDeErro = "O ano deve ser um número inteiro válido.";
+                estadoAtual = Estados.ERRO;
+                return;
+            }
+
+            int ano = Integer.parseInt(anoStr);
+
+            if (biblioteca.adicionarLivro(new Livro(titulo, autor, ano))) {
+                estadoAtual = Estados.SUCESSO;
+            } else {
+                mensagemDeErro = "Falha ao registrar livro. Verifique se ele já foi adicionado.";
+                estadoAtual = Estados.ERRO;
+            }
+
+            return;
         }
 
         if (estadoAtual == Estados.EMPRESTIMO) {
-            /// @todo: Valida entrada e alterna o estado.
+
+        
+        /// @todo: Valida entrada e alterna o estado.
         }
 
         if (estadoAtual == Estados.DEVOLUCAO) {
-            /// @todo: Valida entrada e alterna o estado.
+
+        
+        /// @todo: Valida entrada e alterna o estado.
         }
 
-        if (estadoAtual == Estados.LISTA_USUARIOS) {
-            /// @todo: Valida entrada e alterna o estado.
-        }
+    if (estadoAtual == Estados.LISTA_USUARIOS) {
+            usuariosTemp = biblioteca.listarUsuarios(); // garante que a lista seja preenchida
 
+            renderizar();
+            estadoAtual = Estados.MENU_OPCOES;
+            return;
+        }
         if (estadoAtual == Estados.LISTA_LIVROS) {
-            /// @todo: Valida entrada e alterna o estado.
+            livrosTemp = biblioteca.listarLivros(); // garante que a lista seja preenchida
+
+            renderizar();
+            estadoAtual = Estados.MENU_OPCOES;
+            return;
         }
 
         if (estadoAtual == Estados.RELATORIO) {
-            /// @todo: Valida entrada e alterna o estado.
+
+        
+
+    
+    /// @todo: Valida entrada e alterna o estado.
         }
 
     }
@@ -196,17 +262,41 @@ public class Main {
             System.out.println("Digite os dados do livro a ser cadastrado (título, autor, ano):");
             System.out.print("->  ");
         }
+        if (estadoAtual == Estados.LISTA_USUARIOS) {
+            System.out.println("\n=== Lista de Usuários ===");
+            for (Usuario u : usuariosTemp) {
+                System.out.println("- " + u.getNome()
+                        + " | Curso: " + u.getCurso()
+                        + " | Matrícula: " + u.getMatricula());
+            }
+            System.out.println("\nPressione ENTER para continuar...");
+        }
+               if (estadoAtual == Estados.LISTA_LIVROS) {
+            System.out.println("\n=== Lista de Livros ===");
+            for (Livro u : livrosTemp) {
+                System.out.println("- " + u.getTitulo()
+                        + " | Autor: " + u.getAutor()
+                        + " | Ano: " + u.getAno());
+            }
+            System.out.println("\nPressione ENTER para continuar...");
+        }
 
         if (estadoAtual == Estados.EMPRESTIMO) {
-            /// @todo: Exibir tela de empréstimo.
+
+        
+        /// @todo: Exibir tela de empréstimo.
         }
 
         if (estadoAtual == Estados.DEVOLUCAO) {
-            /// @todo: Exibir tela de devolução de livro.
+
+        
+        /// @todo: Exibir tela de devolução de livro.
         }
 
         if (estadoAtual == Estados.RELATORIO) {
-            /// @todo: Exibir tela de relatório.
+
+        
+        /// @todo: Exibir tela de relatório.
         }
 
         if (estadoAtual == Estados.SUCESSO) {
