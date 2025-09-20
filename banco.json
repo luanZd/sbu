@@ -1,5 +1,65 @@
 {
-  "USUARIO": [],
-  "LIVRO": [],
-  "EMPRESTIMO": []
+  "USUARIO": [
+    {
+      "nome": "malva",
+      "matricula": "20250919226646",
+      "curso": "bcc",
+      "listaDeEmprestimos": []
+    },
+    {
+      "nome": "alan",
+      "matricula": "20250919229884",
+      "curso": "bcc",
+      "listaDeEmprestimos": []
+    }
+  ],
+  "LIVRO": [
+    {
+      "titulo": "java",
+      "autor": "alan",
+      "ano": 2025,
+      "disponivel": true,
+      "quantidade": 36
+    }
+  ],
+  "EMPRESTIMO": [
+    {
+      "livro_emprestado": {
+        "titulo": "java",
+        "autor": "alan",
+        "ano": 2025,
+        "disponivel": true,
+        "quantidade": 36
+      },
+      "usuario_emprestado": {
+        "nome": "malva",
+        "matricula": "20250919226646",
+        "curso": "bcc",
+        "listaDeEmprestimos": []
+      },
+      "data_emprestimo": "Sep 19, 2025, 10:08:42 PM",
+      "data_devolucao": "Sep 20, 2025, 12:00:00 AM",
+      "devolvido": false,
+      "utilidade": {}
+    },
+    {
+      "livro_emprestado": {
+        "titulo": "java",
+        "autor": "alan",
+        "ano": 2025,
+        "disponivel": true,
+        "quantidade": 36
+      },
+      "usuario_emprestado": {
+        "nome": "alan",
+        "matricula": "20250919229884",
+        "curso": "bcc",
+        "listaDeEmprestimos": []
+      },
+      "data_emprestimo": "Sep 19, 2025, 10:10:41 PM",
+      "data_devolucao": "Sep 22, 2025, 12:00:00 AM",
+      "devolvido": true,
+      "utilidade": {}
+    }
+  ]
 }

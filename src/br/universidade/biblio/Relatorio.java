@@ -54,14 +54,15 @@ public class Relatorio {
     List<Emprestimo> emprestimos = consultarTodosLivrosEmprestados();
     System.out.println("Relatório de Empréstimos:");
     if(emprestimos.isEmpty()) {
-      System.out.println("Nenhum empréstimo registrado.");
+      System.out.println("Nenhum empréstimo registrado.\n");
       return;
     }
     for (Emprestimo e : emprestimos) {
-      System.out.println("Usuário: " + e.getUsuario().getNome() +
-          " | Livro: " + e.getLivro().getTitulo() +
-          " | Data de Empréstimo: " + e.getDataEmprestimo() +
-          " | Data de Devolução: " + e.getDataDevolucao());
+      System.out.println("===========================\nUsuário: " + e.getUsuario().getNome() +
+          "\nLivro: " + e.getLivro().getTitulo() +
+          "\nData de Empréstimo: " + e.getDataEmprestimo() +
+          "\nData de Devolução:  " + e.getDataDevolucao() +
+          "\nSituação: " +( e.isDevolvido()==true?"Devolvido":"Emprestado")+"\n =============================\n");
     }
   }
 
@@ -69,14 +70,15 @@ public class Relatorio {
     List<Emprestimo> atrasados = consultarEmprestimosAtrasados();
     System.out.println("Relatório de Empréstimos Atrasados:");
     if(atrasados.isEmpty()) {
-      System.out.println("Nenhum empréstimo atrasado.");
+      System.out.println("Nenhum empréstimo atrasado.\n");
       return;
     }
     for (Emprestimo e : atrasados) {
-      System.out.println("Usuário: " + e.getUsuario().getNome() +
-          " | Livro: " + e.getLivro().getTitulo() +
-          " | Data de Empréstimo: " + e.getDataEmprestimo() +
-          " | Data de Devolução: " + e.getDataDevolucao());
+      System.out.println("===========================\nUsuário: " + e.getUsuario().getNome() +
+          "\nLivro: " + e.getLivro().getTitulo() +
+          "\nData de Empréstimo: " + e.getDataEmprestimo() +
+          "\nData de Devolução:  " + e.getDataDevolucao() +
+          "\nSituação: " +( e.isDevolvido()==true?"Devolvido":"Atrasada")+"\n=============================");
     }
   }
 }
